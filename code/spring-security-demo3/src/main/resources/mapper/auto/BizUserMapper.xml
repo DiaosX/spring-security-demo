@@ -35,13 +35,13 @@
         id,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="age != null">
         age,
       </if>
       <if test="desc != null">
-        desc,
+        `desc`,
       </if>
       <if test="createBy != null">
         create_by,
