@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @RequestMapping(value = "/info", method = {RequestMethod.GET})
-    @ApiOperation("获取产品信息")
+    @ApiOperation("获取产品信息,需要[product:info]权限才能访问")
     @PreAuthorize("hasAuthority('product:info')")
     public BaseResp productInfo() {
         return BaseResp.success("这个是产品");

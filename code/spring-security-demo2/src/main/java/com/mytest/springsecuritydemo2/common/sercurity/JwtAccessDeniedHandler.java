@@ -1,7 +1,7 @@
 package com.mytest.springsecuritydemo2.common.sercurity;
 
 import com.alibaba.fastjson.JSON;
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import com.mytest.springsecuritydemo2.common.base.BaseErrorEnum;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        String responseBody = JSON.toJSONString(BaseResponse.error(BaseErrorEnum.NOT_PERMISSION));
+        String responseBody = JSON.toJSONString(BaseResp.error(BaseErrorEnum.NOT_PERMISSION));
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(responseBody);

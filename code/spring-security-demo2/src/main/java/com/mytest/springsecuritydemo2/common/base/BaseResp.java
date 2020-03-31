@@ -6,27 +6,27 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BaseResponse<T> {
+public class BaseResp<T> {
     protected boolean success;
     protected String code;
     protected String errMsg;
     protected T data;
 
-    public BaseResponse() {
+    public BaseResp() {
 
     }
 
-    public BaseResponse(BaseError errorInfo) {
+    public BaseResp(BaseError errorInfo) {
         this(errorInfo.getCode(), errorInfo.getErrMsg());
     }
 
-    public BaseResponse(String code, String errMsg) {
+    public BaseResp(String code, String errMsg) {
         this.code = code;
         this.errMsg = errMsg;
         this.success = false;
     }
 
-    public BaseResponse(String code, T data) {
+    public BaseResp(String code, T data) {
         this.code = code;
         this.data = data;
         this.success = true;
@@ -37,8 +37,8 @@ public class BaseResponse<T> {
      *
      * @return
      */
-    public static BaseResponse success() {
-        return BaseResponse.success(null);
+    public static BaseResp success() {
+        return BaseResp.success(null);
     }
 
     /**
@@ -47,29 +47,29 @@ public class BaseResponse<T> {
      * @param data
      * @return
      */
-    public static <T> BaseResponse<T> success(T data) {
-        return new BaseResponse<>(BaseErrorEnum.SUCCESS.getCode(), data);
+    public static <T> BaseResp<T> success(T data) {
+        return new BaseResp<>(BaseErrorEnum.SUCCESS.getCode(), data);
     }
 
     /**
      * 失败
      */
-    public static BaseResponse error(BaseError errorInfo) {
-        return new BaseResponse(errorInfo);
+    public static BaseResp error(BaseError error) {
+        return new BaseResp(error);
     }
 
     /**
      * 失败
      */
-    public static BaseResponse error(String code, String message) {
-        return new BaseResponse(code, message);
+    public static BaseResp error(String code, String message) {
+        return new BaseResp(code, message);
     }
 
     /**
      * 失败
      */
-    public static BaseResponse error(String message) {
-        return new BaseResponse("-1", message);
+    public static BaseResp error(String message) {
+        return new BaseResp("-1", message);
     }
 
     @Override

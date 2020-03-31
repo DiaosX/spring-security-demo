@@ -1,7 +1,7 @@
 package com.mytest.springsecuritydemo2.common.sercurity;
 
 import com.alibaba.fastjson.JSON;
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import com.mytest.springsecuritydemo2.common.enums.JwtErrorEnum;
 import com.mytest.springsecuritydemo2.common.util.JwtTokenUtil;
 import io.jsonwebtoken.Claims;
@@ -56,13 +56,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.isEmpty(jwtTokenHeader)) {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write(JSON.toJSONString(BaseResponse.error(JwtErrorEnum.TOKEN_CAN_NOT_EMPTY)));
+            response.getWriter().write(JSON.toJSONString(BaseResp.error(JwtErrorEnum.TOKEN_CAN_NOT_EMPTY)));
             return;
         }
         if (!jwtTokenHeader.startsWith(JwtTokenUtil.JWT_TOKEN_PREFIX)) {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write(JSON.toJSONString(BaseResponse.error(JwtErrorEnum.TOKEN_FORMAT_ERROR)));
+            response.getWriter().write(JSON.toJSONString(BaseResp.error(JwtErrorEnum.TOKEN_FORMAT_ERROR)));
             return;
         }
         String jwtToken = jwtTokenHeader.substring(JwtTokenUtil.JWT_TOKEN_PREFIX.length() + 1); // The part after "Bearer "
@@ -73,7 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.error("token验证失败");
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write(JSON.toJSONString(BaseResponse.error(JwtErrorEnum.TOKEN_INVALID_ERROR.getCode(), "token失效," + result.getErrMsg())));
+            response.getWriter().write(JSON.toJSONString(BaseResp.error(JwtErrorEnum.TOKEN_INVALID_ERROR.getCode(), "token失效," + result.getErrMsg())));
             return;
         }
         Claims claims = result.getData();

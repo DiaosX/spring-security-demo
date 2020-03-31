@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mytest.springsecuritydemo3.dao.BizUserRoleMapperExtend">
+    <resultMap id="UserAndRoleList" type="com.mytest.springsecuritydemo3.model.dto.UserPermissionDTO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="disabled" jdbcType="BIT" property="disabled"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <collection property="permissionList"
+                    javaType="ArrayList"
+                    ofType="com.mytest.springsecuritydemo3.model.entity.BizPermission"
+                    column="id"
+                    select="selectListByUserId">
+        </collection>
+    </resultMap>
+
+    <resultMap id="PermissionResultMap" type="com.mytest.springsecuritydemo3.model.entity.BizPermission">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="disabled" jdbcType="BIT" property="disabled"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <select id="selectUserByUserName" parameterType="java.lang.String" resultMap="UserAndRoleList">
+        select u.*
+        from biz_user u
+        where u.name = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="selectListByUserId" parameterType="java.lang.Integer" resultMap="PermissionResultMap">
+        select p.*
+        from biz_user_role ur
+                 join biz_role r on ur.role_id = r.id
+                 join biz_role_permission rp on r.id = rp.role_id
+                 join biz_permission p on rp.permission_id = p.id
+        where ur.user_id = #{id}
+    </select>
+</mapper>

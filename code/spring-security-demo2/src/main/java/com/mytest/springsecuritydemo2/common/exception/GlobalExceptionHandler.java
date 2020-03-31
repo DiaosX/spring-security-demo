@@ -2,7 +2,7 @@ package com.mytest.springsecuritydemo2.common.exception;
 
 import com.mytest.springsecuritydemo2.common.base.BaseErrorEnum;
 import com.mytest.springsecuritydemo2.common.base.BaseException;
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -30,9 +30,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BaseException.class)
     @ResponseBody
-    public BaseResponse bizExceptionHandler(HttpServletRequest req, BaseException e) {
+    public BaseResp bizExceptionHandler(HttpServletRequest req, BaseException e) {
         logger.error("请求url:[{}],发生业务异常！原因是：{}", req.getRequestURI(), e.getErrMsg());
-        return BaseResponse.error(e.getErrCode(), e.getErrMsg());
+        return BaseResp.error(e.getErrCode(), e.getErrMsg());
     }
 
     /**
@@ -44,9 +44,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = NullPointerException.class)
     @ResponseBody
-    public BaseResponse exceptionHandler(HttpServletRequest req, NullPointerException e) {
+    public BaseResp exceptionHandler(HttpServletRequest req, NullPointerException e) {
         logger.error("请求url:[{}],发生空指针异常！原因是:[{}]", req.getRequestURI(), e);
-        return BaseResponse.error(BaseErrorEnum.BODY_NOT_MATCH);
+        return BaseResp.error(BaseErrorEnum.BODY_NOT_MATCH);
     }
 
     /**
@@ -58,13 +58,13 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
-    public BaseResponse handleArgumentInValidException(MethodArgumentNotValidException e) {
+    public BaseResp handleArgumentInValidException(MethodArgumentNotValidException e) {
         logger.error(e.getMessage(), e);
         List<String> errorMsgList = new ArrayList<>();
         for (FieldError error : e.getBindingResult().getFieldErrors()) {
             errorMsgList.add(error.getDefaultMessage());
         }
-        return BaseResponse.error(BaseErrorEnum.PARAM_ERROR.getCode(), String.join("|", errorMsgList));
+        return BaseResp.error(BaseErrorEnum.PARAM_ERROR.getCode(), String.join("|", errorMsgList));
     }
 
     /**
@@ -74,12 +74,12 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = BindException.class)
-    public BaseResponse handleArgumentInValidException(BindException e) {
+    public BaseResp handleArgumentInValidException(BindException e) {
         List<String> errorMsgList = new ArrayList<>();
         for (FieldError error : e.getBindingResult().getFieldErrors()) {
             errorMsgList.add(error.getDefaultMessage());
         }
-        return BaseResponse.error(BaseErrorEnum.PARAM_ERROR.getCode(), String.join("|", errorMsgList));
+        return BaseResp.error(BaseErrorEnum.PARAM_ERROR.getCode(), String.join("|", errorMsgList));
     }
 
 
@@ -92,8 +92,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public BaseResponse exceptionHandler(HttpServletRequest req, Exception e) {
+    public BaseResp exceptionHandler(HttpServletRequest req, Exception e) {
         logger.error("请求url:[{}],未知异常！原因是:[{}]", req.getRequestURI(), e);
-        return BaseResponse.error(BaseErrorEnum.INTERNAL_SERVER_ERROR.getCode(), e.getMessage());
+        return BaseResp.error(BaseErrorEnum.INTERNAL_SERVER_ERROR.getCode(), e.getMessage());
     }
 }

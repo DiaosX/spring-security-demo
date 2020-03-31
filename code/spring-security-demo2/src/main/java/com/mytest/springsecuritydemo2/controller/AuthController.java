@@ -1,6 +1,6 @@
 package com.mytest.springsecuritydemo2.controller;
 
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,8 @@ public class AuthController {
     @RequestMapping(value = "/signin", method = {RequestMethod.GET})
     @ResponseBody
     @ApiOperation("登录")
-    public BaseResponse signin(@RequestParam("userName") String userName,
-                               @RequestParam("password") String password) {
-        return BaseResponse.success("这个是管理员");
+    public BaseResp signin(@RequestParam("userName") String userName,
+                           @RequestParam("password") String password) {
+        return BaseResp.success("这个是管理员");
     }
 }

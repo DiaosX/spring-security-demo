@@ -5,12 +5,15 @@ import com.mytest.springsecuritydemo1.common.base.BaseException;
 import com.mytest.springsecuritydemo1.common.base.BaseResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -83,6 +86,14 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public BaseResp handleNoPermissionException(HttpServletRequest req, AccessDeniedException e) {
+        logger.error("请求url:[{}], 没有权限访问", req.getRequestURI());
+        return BaseResp.error(BaseErrorEnum.NOT_PERMISSION.getCode(), e.getMessage());
+    }
+
     /**
      * 处理其他异常
      *
@@ -92,6 +103,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseResp exceptionHandler(HttpServletRequest req, Exception e) {
         logger.error("请求url:[{}],未知异常！原因是:[{}]", req.getRequestURI(), e);
         return BaseResp.error(BaseErrorEnum.INTERNAL_SERVER_ERROR.getCode(), e.getMessage());

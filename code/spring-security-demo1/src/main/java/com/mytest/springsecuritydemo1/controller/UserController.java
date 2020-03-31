@@ -26,14 +26,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ApiOperation("新增用户")
+    @ApiOperation("新增用户,需要[user:add]权限才能访问")
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('user:add')")
     public BaseResp<AddUserResp> add(@Validated @RequestBody AddUserReq req) {
         return userService.addUser(req);
     }
 
-    @ApiOperation("查询用户")
+    @ApiOperation("查询用户,需要[user:query]权限才能访问")
     @PostMapping("/query")
     @PreAuthorize("hasAuthority('user:query')")
     public BaseResp<QueryUserResp> queryUser(@RequestBody QueryUserReq req) {

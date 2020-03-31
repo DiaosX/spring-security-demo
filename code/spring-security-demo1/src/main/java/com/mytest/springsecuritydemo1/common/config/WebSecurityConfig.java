@@ -1,7 +1,5 @@
 package com.mytest.springsecuritydemo1.common.config;
 
-import com.mytest.springsecuritydemo1.common.sercurity.JwtAccessDeniedHandler;
-import com.mytest.springsecuritydemo1.common.sercurity.JwtAuthenticationEntryPoint;
 import com.mytest.springsecuritydemo1.common.sercurity.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +21,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -58,10 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling()
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     // 密码明文加密方式配置

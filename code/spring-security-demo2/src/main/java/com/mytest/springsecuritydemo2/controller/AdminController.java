@@ -1,6 +1,6 @@
 package com.mytest.springsecuritydemo2.controller;
 
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +15,22 @@ public class AdminController {
 
     @RequestMapping(value = "/info", method = {RequestMethod.GET})
     @ResponseBody
-    @ApiOperation("获取管理员信息")
-    public BaseResponse adminInfo() {
-        return BaseResponse.success("这个是管理员");
+    @ApiOperation("获取管理员信息,需要[admin:info]权限才能访问")
+    public BaseResp adminInfo() {
+        return BaseResp.success("这个是管理员");
     }
 
     @RequestMapping(value = "/info", method = {RequestMethod.POST})
     @ResponseBody
-    @ApiOperation("获取管理员信息")
-    public BaseResponse adminInfo1() {
-        return BaseResponse.success("这个是管理员");
+    @ApiOperation("获取管理员信息,需要[admin:info]权限才能访问")
+    public BaseResp adminInfo1() {
+        return BaseResp.success("这个是管理员");
     }
 
     @RequestMapping(value = "/accessToAny", method = {RequestMethod.GET})
     @ResponseBody
-    public BaseResponse accessToAny() {
-        return BaseResponse.success("任何人都可以访问");
+    @ApiOperation("无需权限都能访问")
+    public BaseResp accessToAny() {
+        return BaseResp.success("任何人都可以访问");
     }
 }

@@ -1,7 +1,7 @@
 package com.mytest.springsecuritydemo2.common.sercurity;
 
 import com.alibaba.fastjson.JSON;
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import com.mytest.springsecuritydemo2.common.util.JwtTokenUtil;
 import com.mytest.springsecuritydemo2.model.dto.UserDetailsDTO;
 import com.mytest.springsecuritydemo2.model.resp.SignInResp;
@@ -34,7 +34,7 @@ public class JwtSignInSuccessHandler implements AuthenticationSuccessHandler {
         signInResp.setToken(JwtTokenUtil.JWT_TOKEN_PREFIX + " " + jwtToken);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(JSON.toJSONString(BaseResponse.success(signInResp)));
+        response.getWriter().write(JSON.toJSONString(BaseResp.success(signInResp)));
     }
 
     private RsaSigner signer;

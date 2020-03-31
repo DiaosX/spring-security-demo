@@ -1,6 +1,6 @@
 package com.mytest.springsecuritydemo2.controller;
 
-import com.mytest.springsecuritydemo2.common.base.BaseResponse;
+import com.mytest.springsecuritydemo2.common.base.BaseResp;
 import com.mytest.springsecuritydemo2.model.req.AddUserReq;
 import com.mytest.springsecuritydemo2.model.req.QueryUserReq;
 import com.mytest.springsecuritydemo2.model.resp.AddUserResp;
@@ -25,15 +25,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ApiOperation("新增用户")
+    @ApiOperation("新增用户,需要[user:add]权限才能访问")
     @PostMapping("/add")
-    public BaseResponse<AddUserResp> add(@Validated @RequestBody AddUserReq req) {
-        return BaseResponse.success(userService.addUser(req));
+    public BaseResp<AddUserResp> add(@Validated @RequestBody AddUserReq req) {
+        return BaseResp.success(userService.addUser(req));
     }
 
-    @ApiOperation("查询用户")
+    @ApiOperation("查询用户,需要[user:query]权限才能访问")
     @PostMapping("/query")
-    public BaseResponse<QueryUserResp> queryUser(@RequestBody QueryUserReq req) {
-        return BaseResponse.success(userService.queryUser(req));
+    public BaseResp<QueryUserResp> queryUser(@RequestBody QueryUserReq req) {
+        return BaseResp.success(userService.queryUser(req));
     }
 }

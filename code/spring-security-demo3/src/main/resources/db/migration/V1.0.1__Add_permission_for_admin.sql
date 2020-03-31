@@ -1,0 +1,4 @@
+INSERT INTO `biz_permission`(url,method,`name`,`desc`,disabled,create_by,create_time,update_by,update_time) VALUES ('/v1/admin/info', 'post', 'admin:info', NULL, 0, 'admin', '2020-03-23 15:01:01', NULL, '2020-03-23 15:01:05');
+INSERT INTO `biz_permission`(url,method,`name`,`desc`,disabled,create_by,create_time,update_by,update_time) VALUES ('/v1/product/info', 'get', 'product:info', NULL, 0, 'admin', '2020-03-23 15:01:01', NULL, '2020-03-23 15:01:05');
+INSERT INTO `biz_permission`(url,method,`name`,`desc`,disabled,create_by,create_time,update_by,update_time) VALUES ('/v1/user/add', 'post', 'user:add', NULL, 0, 'admin', '2020-03-23 15:01:01', NULL, '2020-03-23 15:01:05');
+INSERT INTO `biz_permission`(url,method,`name`,`desc`,disabled,create_by,create_time,update_by,update_time) VALUES ('/v1/user/query', 'post', 'user:query', NULL, 0, 'admin', '2020-03-23 15:01:01', NULL, '2020-03-23 15:01:05');

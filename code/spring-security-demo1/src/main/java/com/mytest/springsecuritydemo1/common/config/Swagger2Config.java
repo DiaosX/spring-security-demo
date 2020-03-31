@@ -57,7 +57,7 @@ public class Swagger2Config extends WebMvcConfigurationSupport {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .description("http://localhost:" + serverPort + "/swagger-ui.html")
-                .title("Spring Security + JWT + 注解方式授权")
+                .title("Spring Security + JWT + @PreAuthorize 注解方式授权")
                 .version("1.0")
                 .build();
     }
